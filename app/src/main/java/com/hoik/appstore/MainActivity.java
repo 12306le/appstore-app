@@ -126,13 +126,13 @@ public class MainActivity extends Activity {
             return false; // 内部导航放行
         }
         if (scheme.equals("http") || scheme.equals("https")) {
-            return openExternal(uri);
+            return openUriExternally(uri);
         }
         // tel: mailto: market: 等
-        return openExternal(uri);
+        return openUriExternally(uri);
     }
 
-    private boolean openExternal(Uri uri) {
+    private boolean openUriExternally(Uri uri) {
         try {
             Intent i = new Intent(Intent.ACTION_VIEW, uri);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -237,7 +237,7 @@ public class MainActivity extends Activity {
         @JavascriptInterface
         public void openExternal(String url) {
             final Uri uri = Uri.parse(url);
-            runOnUiThread(() -> openExternal(uri));
+            runOnUiThread(() -> openUriExternally(uri));
         }
 
         @JavascriptInterface
