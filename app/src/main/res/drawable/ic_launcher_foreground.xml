@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- 下载箭头：强调色轨道 -->
+    <path
+        android:pathData="M54,26 L54,62"
+        android:strokeColor="#5E6AD2"
+        android:strokeWidth="8"
+        android:strokeLineCap="round" />
+
+    <!-- 箭头头部 -->
+    <path
+        android:pathData="M40,50 L54,66 L68,50"
+        android:strokeColor="#A78BFA"
+        android:strokeWidth="8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+
+    <!-- 底座托盘 -->
+    <path
+        android:pathData="M34,74 L74,74"
+        android:strokeColor="#5E6AD2"
+        android:strokeWidth="8"
+        android:strokeLineCap="round" />
+
+</vector>

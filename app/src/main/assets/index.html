@@ -1,0 +1,505 @@
+<!doctype html><html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08090A">
+<meta name="robots" content="noindex,nofollow">
+<title>软件下载</title>
+<style>
+:root{--ground:#08090A;--surface:#101114;--surface-2:#16171C;--surface-3:#1E1F25;
+--hair:rgba(255,255,255,.06);--hair-2:rgba(255,255,255,.10);--txt:#F7F8F8;--txt-2:#9CA3AF;
+--txt-3:#6B7280;--accent:#5E6AD2;--accent-soft:#A78BFA;--good:#4ADE80;--warn:#FBBF24;
+--slow:#FB923C;--bad:#F87171;--r-s:6px;--r-m:12px;--r-l:16px;--ease:cubic-bezier(.22,1,.36,1)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ground);color:var(--txt);
+font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+-webkit-font-smoothing:antialiased;padding:22px 0 calc(36px + env(safe-area-inset-bottom));overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+background:radial-gradient(620px 300px at 50% -180px,rgba(94,106,210,.13),transparent 70%)}
+.wrap{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:0 20px}
+.topline{display:flex;align-items:flex-start;gap:10px;margin:0 0 20px}
+.tl-text{flex:1;font-size:11.5px;line-height:1.6;color:var(--txt-3)}
+.tl-text .stamp{color:var(--txt-2);font-weight:500;font-family:ui-monospace,monospace;font-size:10.5px}
+.warnline{color:#FBBF24}
+.sec{display:flex;align-items:baseline;gap:9px;margin:0 0 11px}
+.sec h2{font:600 11px/1 -apple-system,"PingFang SC",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--txt-2);margin:0}
+.sec .count{font:500 10.5px/1 ui-monospace,monospace;color:var(--txt-3)}
+.sec .rule{flex:1;height:1px;background:var(--hair);transform:translateY(-2px)}
+.group{margin-bottom:28px}
+.card{background:var(--surface);border:1px solid var(--hair);border-radius:var(--r-m);margin-bottom:8px;overflow:hidden;transition:border-color .15s ease}
+.card:hover{border-color:var(--hair-2)}
+.card-head{display:flex;align-items:flex-start;gap:11px;padding:13px 14px 12px}
+.appico{width:30px;height:30px;flex:none;margin-top:1px;border-radius:8px;object-fit:cover;display:block;background:#1E1F25}
+.mono-tile{width:30px;height:30px;flex:none;margin-top:1px;border-radius:8px;display:grid;place-items:center;
+font:600 11px/1 -apple-system,"PingFang SC",sans-serif;letter-spacing:-.01em}
+.ch-info{min-width:0;flex:1}
+.ch-title{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.ch-title h3{font-size:14.5px;font-weight:600;letter-spacing:-.01em;margin:0;line-height:1.3}
+.tag{font:500 9.5px/1 ui-monospace,monospace;color:var(--txt-2);background:var(--surface-3);
+border:1px solid var(--hair);border-radius:4px;padding:3px 5px}
+.tag.pre{color:var(--warn);border-color:rgba(251,191,36,.25);background:rgba(251,191,36,.1)}
+.stale{font:500 9.5px/1 -apple-system,sans-serif;color:var(--txt-3);border:1px solid var(--hair);border-radius:4px;padding:3px 5px}
+.ch-desc{font-size:12px;color:var(--txt-2);margin:4px 0 0;line-height:1.45;
+display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ch-sub{font-size:11px;color:var(--txt-3);margin-top:4px}
+.ch-sub a{color:var(--txt-3);text-decoration:none;border-bottom:1px solid var(--hair-2)}
+.ch-sub a:hover{color:var(--txt-2)}
+.rows{border-top:1px solid var(--hair)}
+.row{display:flex;align-items:center;gap:9px;width:100%;padding:10px 14px;text-decoration:none;
+background:none;border:0;border-bottom:1px solid var(--hair);color:inherit;font:inherit;text-align:left;cursor:pointer;transition:background .13s ease}
+.row:last-child{border-bottom:0}
+.row:hover{background:var(--surface-2)}
+.row:active{background:var(--surface-3)}
+.pico{width:16px;height:16px;flex:none}
+.pico.and{color:#5FD48B}
+.pico.win{color:#5AA7F5}
+.rtag{font:500 9.5px/1 -apple-system,"PingFang SC",sans-serif;flex:none;
+padding:3px 5px;border-radius:4px;border:1px solid var(--hair);color:var(--txt-3)}
+.rtag.portable{color:#4ADE80;border-color:rgba(74,222,128,.28);background:rgba(74,222,128,.09)}
+.rtag.apk{color:#8FA0C8}
+.rtag.install{color:var(--txt-3)}
+.rname{font-size:13px;color:var(--txt);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rsize{font:500 11px/1 ui-monospace,monospace;color:var(--txt-3);font-variant-numeric:tabular-nums;flex:none}
+.backdrop{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;
+transition:opacity .22s ease;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+.backdrop.show{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;background:#101114;border-top:1px solid var(--hair-2);
+border-radius:18px 18px 0 0;padding:8px 16px calc(14px + env(safe-area-inset-bottom));
+transform:translateY(102%);transition:transform .3s var(--ease);box-shadow:0 -18px 50px -20px rgba(0,0,0,.9)}
+.sheet.show{transform:none}
+.grab{width:34px;height:4px;border-radius:2px;background:#2A2C33;margin:0 auto 14px}
+.sh-head{margin-bottom:14px}
+.sh-title{font-size:15px;font-weight:600;letter-spacing:-.01em;margin-bottom:3px}
+.sh-sub{font-size:12px;color:var(--txt-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.opt{display:flex;align-items:center;gap:11px;width:100%;padding:13px 14px;margin-bottom:8px;cursor:pointer;
+background:var(--surface-2);border:1px solid var(--hair);border-radius:var(--r-m);color:var(--txt);
+font:inherit;text-align:left;text-decoration:none;transition:background .13s ease,border-color .13s ease,transform .1s ease}
+.opt:hover{background:var(--surface-3);border-color:var(--hair-2)}
+.opt:active{transform:scale(.99)}
+.opt-ic{width:28px;height:28px;flex:none;border-radius:8px;display:grid;place-items:center;background:rgba(94,106,210,.16);color:var(--accent-soft)}
+.opt-ic svg{width:14px;height:14px}
+.opt-body{flex:1;min-width:0}
+.opt-name{display:block;font-size:13.5px;font-weight:550;letter-spacing:-.005em}
+.opt-hint{display:block;font-size:11px;color:var(--txt-3);margin-top:2px}
+.opt-ms{display:inline-flex;align-items:center;gap:6px;flex:none;font:500 11px/1 ui-monospace,monospace;color:var(--txt-2);font-variant-numeric:tabular-nums}
+.dot{width:5px;height:5px;border-radius:50%;flex:none;background:var(--txt-3)}
+.dot.good{background:var(--good)}.dot.warn{background:var(--warn)}.dot.slow{background:var(--slow)}.dot.bad{background:var(--bad)}
+.dot.test{background:var(--accent-soft);animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.rec{font:700 9px/1 -apple-system,"PingFang SC",sans-serif;color:#08090A;
+background:linear-gradient(135deg,#4ADE80,#22D3EE);padding:3px 5px;border-radius:4px;
+margin-left:6px;vertical-align:1.5px;letter-spacing:.02em}
+.rec-opt{border-color:rgba(74,222,128,.22)}
+.opt.last{border-color:rgba(94,106,210,.38)}
+.opt.last .opt-name::after{content:"上次";font:500 9px/1 -apple-system,"PingFang SC",sans-serif;color:var(--accent-soft);
+background:rgba(94,106,210,.16);border:1px solid rgba(94,106,210,.3);border-radius:3px;padding:2.5px 4px;margin-left:6px;vertical-align:1px}
+.pwbox{position:fixed;left:50%;top:50%;z-index:52;width:min(320px,calc(100vw - 48px));
+transform:translate(-50%,-46%) scale(.96);opacity:0;pointer-events:none;
+background:#101114;border:1px solid var(--hair-2);border-radius:16px;padding:20px;
+box-shadow:0 24px 60px -20px rgba(0,0,0,.95);transition:opacity .18s ease,transform .22s var(--ease)}
+.pwbox.show{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+.pwtitle{font-size:14.5px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
+.pwsub{font-size:11.5px;color:var(--txt-3);line-height:1.5;margin-bottom:14px}
+.pwin{width:100%;padding:11px 12px;border-radius:10px;background:var(--surface-2);
+border:1px solid var(--hair);color:var(--txt);font:500 14px/1 inherit;outline:none;
+transition:border-color .15s ease,background .15s ease}
+.pwin:focus{border-color:rgba(94,106,210,.5);background:#1A1C22}
+.pwerr{min-height:16px;font-size:11.5px;color:#F87171;margin-top:8px}
+.pwrow{display:flex;gap:8px;margin-top:6px}
+.pwcancel,.pwok{flex:1;padding:11px;border:0;border-radius:10px;cursor:pointer;font:600 13px/1 inherit;
+transition:opacity .15s ease,background .15s ease}
+.pwcancel{background:var(--surface-2);color:var(--txt-2)}
+.pwcancel:hover{background:var(--surface-3);color:var(--txt)}
+.pwok{background:var(--accent);color:#fff}
+.pwok:hover{opacity:.92}
+.cancel{width:100%;padding:13px;margin-top:2px;cursor:pointer;background:none;border:0;color:var(--txt-2);font:500 13.5px/1 inherit;border-radius:var(--r-m)}
+.cancel:hover{color:var(--txt);background:var(--surface-2)}
+footer{color:var(--txt-3);font-size:11px;line-height:1.9;text-align:center;padding-top:14px;border-top:1px solid var(--hair);margin-top:6px}
+.stamp{color:var(--txt-2);font-weight:500;font-family:ui-monospace,monospace;font-size:10.5px}
+.reveal{opacity:0;transform:translateY(12px)}
+.reveal.in{opacity:1;transform:none;transition:opacity .5s var(--ease),transform .5s var(--ease)}
+::selection{background:rgba(94,106,210,.35)}
+@media (max-width:420px){.wrap{padding:0 16px}}
+.browse{margin:0 0 20px}.browse-tools{display:flex;align-items:center;gap:8px;margin:0 0 5px}.searchbar{display:block;flex:1;min-width:0}.searchbar input{display:block;width:100%;height:38px;padding:0 11px;border:1px solid var(--hair-2);border-radius:7px;background:var(--surface);color:var(--txt);font:13px/1 inherit;outline:none}.searchbar input:focus{border-color:rgba(94,106,210,.55)}.filters{flex:none}.filterline{display:flex;align-items:center;gap:2px;padding:3px;border:1px solid var(--hair-2);border-radius:8px;background:var(--surface)}.filterbtn{min-height:30px;border:0;border-radius:5px;background:transparent;color:var(--txt-3);padding:5px 8px;font:500 11.5px/1 -apple-system,"PingFang SC",sans-serif;white-space:nowrap;cursor:pointer}.filterbtn[aria-pressed=true]{background:#30343D;color:#fff}.results{display:flex;justify-content:space-between;align-items:center;min-height:18px;color:var(--txt-3);font-size:11px;margin:0 0 14px}.clearfilters{border:0;background:none;color:var(--txt-2);padding:2px 0;font:11px/1.3 inherit;cursor:pointer}.clearfilters:hover{color:var(--txt)}.empty{padding:20px 8px;text-align:center;color:var(--txt-2);font-size:13px}.ch-desc.expanded{display:block}.refreshmsg{font-size:11px;color:var(--txt-2);margin-top:5px}.group[hidden],.card[hidden],.empty[hidden],[hidden]{display:none!important}
+.stars{font:500 10.5px/1 ui-monospace,monospace;color:var(--warn);white-space:nowrap}.version-line{display:flex;align-items:center;gap:8px;margin-top:7px;min-height:25px}.version-switch{display:inline-flex;align-items:center;gap:2px;padding:2px;border:1px solid var(--hair);border-radius:6px;background:var(--surface-2)}.version-btn{border:0;border-radius:4px;background:transparent;color:var(--txt-3);padding:4px 6px;font:500 10px/1 -apple-system,"PingFang SC",sans-serif;cursor:pointer}.version-btn[aria-pressed=true]{background:#343740;color:var(--txt)}.active-version{font:500 10px/1 ui-monospace,monospace;color:var(--txt-2)}.release-meta{display:flex;align-items:center;gap:7px;min-height:28px;padding:0 14px 7px;color:var(--txt-3);font-size:10.5px}.release-meta .tag{font-size:9.5px}.release-when{white-space:nowrap}.release-meta a{margin-left:auto;color:var(--txt-3);text-decoration:none;white-space:nowrap}.release-meta a:hover{color:var(--txt-2)}.no-files{padding:10px 14px;color:var(--txt-3);font-size:12px}.error-sub{color:var(--bad);font-size:11px;margin-top:5px}.row:focus-visible,button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #9bb8ff;outline-offset:2px}
+@media(max-width:380px){.browse-tools{gap:5px}.filterbtn{padding-left:6px;padding-right:6px}.version-line{gap:6px}.card-head{padding-left:11px;padding-right:11px}.release-meta{padding-left:11px;padding-right:11px}.row{padding-left:11px;padding-right:11px}}
+</style>
+<style id="app-shell-css">
+/* 顶部留出状态栏高度（Android 端通过 CSS 变量注入），底部留出手势条 */
+body{padding-top:calc(22px + var(--sat, 0px))!important}
+html{padding-bottom:env(safe-area-inset-bottom)}
+/* 离线遮罩 */
+#app-offline{position:fixed;inset:0;z-index:9999;display:none;
+  background:rgba(8,9,10,.94);color:#F7F8F8;align-items:center;justify-content:center;
+  font:15px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;text-align:center;padding:24px}
+#app-offline.on{display:flex}
+#app-offline b{display:block;margin-bottom:8px;font-size:16px}
+#app-offline span{color:#9CA3AF;font-size:13px}
+</style>
+</head><body><div id="app-offline"><div><b>网络不可用</b><span>列表内容已内嵌，但图标与下载需要联网</span></div></div>
+<div class="wrap">
+  <div class="topline">
+    <div class="tl-text">数据同步于 <b class="stamp">2026-10-22 06:14</b> · 取自 GitHub 官方 Release</div>
+    
+  </div>
+  <section class="browse" aria-label="筛选应用">
+    <div class="browse-tools">
+      <label class="searchbar"><input id="appSearch" type="search" placeholder="搜索应用名称或简介" aria-label="搜索应用名称或简介"></label>
+      <div class="filters"><div class="filterline" role="group" aria-label="平台筛选"><button type="button" class="filterbtn" data-filter="platform" data-value="all" aria-pressed="true">全部</button><button type="button" class="filterbtn" data-filter="platform" data-value="android" aria-pressed="false">Android</button><button type="button" class="filterbtn" data-filter="platform" data-value="windows" aria-pressed="false">Windows</button></div></div>
+    </div>
+    <div class="results" id="filterInfo" hidden><span id="matchCount" aria-live="polite"></span><button type="button" class="clearfilters" id="clearFilters">清除筛选</button></div>
+    <div class="empty" id="noResults" hidden>没有符合条件的应用</div>
+  </section>
+  <div class="group">
+    <div class="sec"><h2>代理工具</h2><span class="count">8</span><span class="rule"></span></div>
+    <div class="card reveal" data-search="clash verge rev 基于 clash verge 的 mihomo 桌面客户端" data-platforms="windows">
+    <div class="card-head"><img class="appico" src="data:image/webp;base64,UklGRmILAABXRUJQVlA4WAoAAAAQAAAAXwAAXwAAQUxQSBYEAAABoGzbkmnbmpGZ99m2bdu2UbNtGzXbfiXbtm3b1mVGxCwcLcQHRMQEoO1UEgDMscEhlz38zg//jHef8O9P7z921VGbzisApCT0WXICMOdOl77yJxv8561rdpkfQMrSF8kA5jno8f85UNXMfRA3U3WSHPf8sYsAKNIHyUDa/Pb/SGo1Z4NuVUmOf2jnSYEsncvApHu/RVLV2aJrJfnJEdMCuVuSUfb6iDR1tu6q5LdHTYaUOpSBjV8l1dhRU/KjnYHSFcmY9UZSjR32St6zEJJ0IgE7/kAzdtyUf+8L5A5kTHwJWdlDJW+ZDqW1gnlfpBp76ZUfL4fSUsGaP7Kyt5X/bYvSSsG2Y6jssZL7obRQsIvT2Gs3Ho3SWMGuNGPPXXkMSkMF29KMvffKA1AayVh9rBkDdOX2KA0kzP0zjSG6jV4eeUSSJ36VlUEqv5w+pZEUXMbKMCvvRZHhZWzHykArD0UeVkoz/eIWieuYRZCGk3EzlaEqn5Y8jIz1qQy2clfkISSNejse8x+mTjJYxu5Uhlt5GvIgIpN+7haP+18ziwwo2IPKgCvPQBkg5X0PyfznaUSAjE1pDFm5D8qAu1yD8ldFkDDnaHpMdF8BueAgVgZdeTZKwpPUqIwfF8Fso+lR0X1ZYCcqw648CriUNS7lvZDXaHEZv51i9r/pcZG64gZ0Bm7c81BqZMoLLo/N+NAjtNg+eCc25+/f0yMj9Z/oOIHRe3jx1/D+De9Hemz2fmzOPx+nxfbJ1dTIjI8dHZvy0k3pkRn3n+c/emC01fLbtLicP06Da1njUj4C7EKNq/IkYN7x9LCMq0HwEjUq49cTo+BY1qgqL0NJWHA8PSjjWshIeNQ1JuMHRQQFOzGoyqNQAJFJvnCLyP3vmSEACg6nRlR5ITIAiEz9k1s8bqPnkTQABUewxlN5ITIGlTTZ527RuP05i6TBkLE9NZrKw5ExdMaD1FiUb49KMowk8/6rHolXWxkZw83YhzWSyrOQMfyC21njUL5QsowgpWk+o0Zh/vs8SBhpwtL/m8fgyo2RMfKCrakeQuUBKGiyYD9WD6DyLBQ0W3A01Xs3geejoOmCY2jeL688H1kaQ8EBpPXJjGchC1os2GE0a3+UfgCyoNWClT5n9Z5U/roJCtoumOkuUvtgzmfnR0H7GThsNNW65pV2VkZGFyVhycfI6l3ySr66BiShowXY42uyele8kr8eOQpZ0NkkmO6030i1Llgl/7tgDiCh0xmY7YzvSa/WjlUnfz9/fiALOi4ZmG6/l0iyqjfjWp3k20fNCmRBDyUDWPnsDznQ1NyHcjc1DvziknUSkBN6KhlAWf7Ie75RNujfP3ziapMAKII+5wIAU66wx/kPffC7DmZ/fvzYJfuuMg0AlCxoGVZQOCAmBwAA8CAAnQEqYABgAD45FopDIiEhGxuFGCADhLYG5PsAH0AfwDQAP4BAgH4AUhjojeRX3wH5M+z5Yn8D+EOYXQn2wzp/MA/T39SOvf5gP2t9KD1j+gB/XuoS9Enyz/Y2/s3/F/Zj4AP19//+a8aLIf2RMrVO8Lcg/pPENpF8Xv/U9Q/PH9V+wH/H/6H/y+wJ6Ff6vLcntfhKpnWRe8VSEDErqpr2po1CT4tPMzYToNGb8QwIFgFr32MmnYMmX/Qi2/DnHuPlD0MkfOtT+BWWTAVtU8owoYt3WaYpGvFHA3W6stx6wL71Wu075vmveL1op10eOkKolwJid79tZOwOEsihYqKsmSdKa571R4JMHqCsk0AA/v1l/1Cn9spMsO359rHQCsiD/+O3gXD3vfmOv1tq+lRtJDZFD48h+aMq5sKryO1iMTh4a+t71TalZd9fkxjbI5kjj1rNvIHHQMGIlF6mJWzsVjo9n43fes8u0z/UZi3Py+QvByt1tqIRUOU3FomxdMvJWXmMASAhk+6y2xTGCRNmGXjXq/ltUuYAyMHy2g0WFDc4NBgB8bkH20PyK3w/ElvobCXpjbTmMXyd+X/sEsNfZU1aAf7ga4vEiZicyQid8sCvcWyp+aj0BGARjIXBKg6AodbeSOk/T/vpAOoE5+USNVcad//lrfXDf1zxv0Ai8I0/SJd26P6nNFeOC6HbWiV774oCuujGUGkhxVU2c0ENDqJhN3VgyGZ1v3XQdcEjsHji3iveCBOU+Arl7VekTre+wk7x+r5XlKzm59Wn2aI8xQnq/3cruF58oZ83f/4rWhKT3PDu0+cWhbbA5o4nvruCkuDxVd8DFfU25uIdakuaAWShvirvKKQLKvr2LGS/IrVLuaWAaZ0gpYGurBBXNqNqX8paSwtdud+LOaHCsGo9vfjEqL0Nl+mG3pKw4lNA/PxiD5xS4SEyZ2W3eStEx8dtxc9RBpTT89xpm34/RECUpAVZ9JRE0AlrHMOgv1GFG3oFpxoauNSpw7oUzoin2BXeDEgWcwbEAPI7nm1a83zCrcjch3fhKtb+AzbMHP/1tC+osxsv8vBnentRJ775GNxe5XvJBeKxAh0027pseLBlvJGbVwbsfAXBugfim4qR5EGqNl1nHnvYfJh1abv80IYxQn8w7PPDvvlVGW7RCKQjyR0TumTWovJPLazYly2PUurC9v0E+TS6UdygPv4BcKY26Nwd/1eN7CizEpy7jC0FNRxYdEjdTbdk4E1Q9DxouGMUTMeoH/n3FgV1u19zYhGnaxG9YNbcxwtJWWCUC1bf9MT8XRRKvwoMlGZdI0LfmwZiGp3BOaXhG1kwuQBnbQzJ5jWmWAwLKF63knniPac2hrG6WLObkaK33gqTGXULtNuhEedCO4s9zrO8J3sWlC7viC99lprkx0kLbceOnOBaq5tXwQooq4fL7Civq474UQjXMsibqj4kFSZ7OaQA8pedKMfa0G+leUD/+IS/Q+7kgaAxZ0teXLaZ5LuyUsvFFsBl4visQeXdoUKtDKiwbSyfZqIUq722F5e5pF/eMvVkagOMy7Jy9NtWQRWQ+Geb6SaSnLU07LeMa7rbm/8zColf4cRTpL3QqdRvmvfCSVAVswkYD7mniMMhdtNVSaacdNycbevgjZH9CQgmIHZmf7Ue2onoU/te0odgGbU2i2oVzlOAtEtCthNWEkch+IufeS+Drqd7Y8Ry5PDkNKmKfrI/jP+TI7q7HNJPglVTAKKtmvRuC2dDND0WXyc/+f+D9E3i1J/bAGtX/m1pRpc0/y2Z4ddLqAqVf20wYdGD5sFVzT7H7PGQBqTHkDwfqqyQqzVpOqH76ndB3a6hhVXrA7+E4K0SKi6smLThWLUaFMu7QIKRIryxoRRM8RN7ttqxG1FNegeguED2RG4etgc55Aza7DfhauybOJDE/dXusCHnl2uBr3TMKKzVtWQOsqzSxK2rxnjFdX3aGLsC6NiMnLlomOGdiiuxugJEo5OYOE190TuKATuoTYn57spn02GjI+87rcDlhfsOPWdvX637pZbRAtp17W+y7YsB42/I1B+e+n58s20dPnQunTWtx3aZp81RDKy9ruQ4xgSkfpoLKf/07nzs/8Rv4lTgCaSozwCap72lleLJ3JbsQWH+XV7OipJQ9jFvyTgWFY7cNe4GtLv1q0Ob5zaB4srP5D7LMSS5xlFd/E8kv99Cl8OPXWfFhOv38nfhIOVK4aWAMYxV2qybyoMJ+bPv36gqg77OgzbUGFUTGc/pLQn/EZ0/5ZkJ2YjaGCebfUvWebKAphzrpe/0/FNhkHPstUDJxW+KMRmzNc38ir77LqMRFT0LKXJpeihMeSg7/rlWwvjxOy+tNmiVyIWI8MWhUdDlG/8aKduMZ0auXZGXWRN/fzrMse68eD8gXGeuAb6J3fKcEiYg9q3pjJAA" alt="" width="30" height="30"><div class="ch-info">
+      <div class="ch-title"><h3>Clash Verge Rev</h3><span class="stars" title="GitHub stars">★ 153k</span></div>
+      <div class="ch-desc">基于 Clash Verge 的 Mihomo 桌面客户端</div>
+      
+    </div></div>
+    <div class="release-views"><div class="release-panel" data-release-panel="stable">
+      <div class="release-meta"><span class="tag" data-version-tag>v2.5.8</span><span class="release-when" data-version-date>12 天前</span><a href="https://github.com/clash-verge-rev/clash-verge-rev/releases/tag/v2.5.8" target="_blank" rel="noopener" data-version-link>GitHub ↗</a></div>
+      <div class="rows"><a class="row" href="https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v2.5.8/Clash.Verge_2.5.8_x64-setup.exe" data-url="https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v2.5.8/Clash.Verge_2.5.8_x64-setup.exe" data-app="Clash Verge Rev" data-plat="Windows x64 安装版" data-size="57.4 MB" target="_blank" rel="noopener"><svg class="pico win" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6 10.4 4.5v7.1H3Zm8.4-1.3L21 3v8.6h-9.6ZM3 12.7h7.4v7L3 18.5Zm8.4 0H21V21l-9.6-1.3Z"/></svg><span class="rname">Windows x64</span><span class="rtag install">安装版</span><span class="rsize">57.4 MB</span></a></div>
+    </div></div>
+  </div><div class="card reveal" data-search="v2rayn windows 桌面客户端，可切换 xray、sing-box 等多个核心" data-platforms="windows">
+    <div class="card-head"><img class="appico" src="data:image/webp;base64,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" alt="" width="30" height="30"><div class="ch-info">
+      <div class="ch-title"><h3>v2rayN</h3><span class="stars" title="GitHub stars">★ 118.8k</span></div>
+      <div class="ch-desc">Windows 桌面客户端，可切换 Xray、sing-box 等多个核心</div>
+      
+    </div></div>
+    <div class="release-views"><div class="release-panel" data-release-panel="stable">
+      <div class="release-meta"><span class="tag" data-version-tag>7.25.6</span><span class="release-when" data-version-date>10 天前</span><a href="https://github.com/2dust/v2rayN/releases/tag/7.25.6" target="_blank" rel="noopener" data-version-link>GitHub ↗</a></div>
+      <div class="rows"><a class="row" href="https://github.com/2dust/v2rayN/releases/download/7.25.6/v2rayN-windows-64.zip" data-url="https://github.com/2dust/v2rayN/releases/download/7.25.6/v2rayN-windows-64.zip" data-app="v2rayN" data-plat="Windows x64 免安装" data-size="161 MB" target="_blank" rel="noopener"><svg class="pico win" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6 10.4 4.5v7.1H3Zm8.4-1.3L21 3v8.6h-9.6ZM3 12.7h7.4v7L3 18.5Zm8.4 0H21V21l-9.6-1.3Z"/></svg><span class="rname">Windows x64</span><span class="rtag portable">免安装</span><span class="rsize">161 MB</span></a></div>
+    </div></div>
+  </div><div class="card reveal" data-search="v2rayng xray/v2ray 安卓客户端，兼容 v2fly 核心" data-platforms="android">
+    <div class="card-head"><img class="appico" src="data:image/webp;base64,UklGRrwDAABXRUJQVlA4WAoAAAAQAAAAXwAAXwAAQUxQSBUBAAABgGNbewLl/zPu7i64U0LtsCdfAYdu9gSVu7duI0nKhJMft4iYAPhqjcx4fBG0AolW1MYAIJYxPgYATBOD0Nz61ZPxV2tzIWBaGHTuSCJ3uoBpQBY6kHUuCOR1eRhGVLPComxIIhtyGaxKiNYNwangYsuGqASZWymoEPI+Bxra6pQ8t+noIKXeoaOLlq7XqJuW7n///UjXQ17bHSUP7WrAAjuCU8HFfoiBsh1WZIOKhlwFu5rF3XMhm1wQyJvystdlUUN3ZOZUEnk2G/agGlgimZHa3v1z3fDn+73aaCZiBY3oSJaKQ2NTxo8NF0tJB+oA5oyW2qptxlfbSlEnA71o8wRjCeNjQY8NQTuzWG3GWy0MvpYCAFZQOCCAAgAAsBIAnQEqYABgAD49GIpDIiGhGjkNOCADxLSACvJf6r+IGoaequT/fCfjd+QGeq8FFoBjtcYHm4f2/lo+i/9r7gf8o/mv+q9YDqIv1aKuv0KZePDsQAb39RUCP3me9dByzpXvLL0sF8QjUbr+fWLQUIBRTPobZVGXvE85e+0eEUPcB4czF8UuODY1N3Q0sZCpLk6+5Emn14WK89aPRgAA/t52/6gyN4aFW8624f91bAnXCv+7+ikqb4KwOetjoRld753q8zd9mLzn45RQCNE3tZ/x2/+65N6GviRWsN8nwl2RkB+AFI2bGWm1F7+rrML66BUegnOh8rik3mk+z1eq2f6c//gE5Yq4l9v5uoSEyHoqXvSgByDq6rROf73fE+SOmNeb5V77XygP0QuOX/4hHyX3TIcNCxN4qkKRg9lk//VVXx/d/QxzUffSUDv5AxBZh55BIogaF1/bqgi+z8+YugwPJdvV3YRhgaBB00oDQb8jP/zFzktP25jAAoo41LnkmDzJF+GTFFXw1k2N+gAe8m8Y2ohxfRIYJs7FpeoKOss8ukf+opiZsbF36Lcj8vg1qa9+v5c2NnqhoDsc0VBGDIIiGh/hSZidNLApkUrsmvVppELIDfLMl9OXXy40HspE0RDBwEqM9cPopUWjRuYWRkqnu42cL2CQmYYujIwgcjvlMOMlP8RGfUgbycc9i6YiYoR6HdmqHgT+wgk6P30HzhAwjOKYk8yQE15REWflxPRC6e37n1o8r6P/JHC8I1zYB5i/CGdnj+UX0l50laC1T4WisaaVdXoC3W8xz+dfupZbfJOleZV2aOpcMv0pG+yoaH7/JIEkcPK0OpPrRw2AAA==" alt="" width="30" height="30"><div class="ch-info">
+      <div class="ch-title"><h3>v2rayNG</h3><span class="stars" title="GitHub stars">★ 64.4k</span></div>
+      <div class="ch-desc">Xray/V2Ray 安卓客户端，兼容 v2fly 核心</div>
+      <div class="version-line"><div class="version-switch" role="group" aria-label="v2rayNG 发布版本">
+      <button type="button" class="version-btn" data-version="stable" aria-pressed="true">稳定版</button>
+      <button type="button" class="version-btn" data-version="prerelease" aria-pressed="false">预发布</button>
+    </div></div>
+    </div></div>
+    <div class="release-views"><div class="release-panel" data-release-panel="stable">
+      <div class="release-meta"><span class="tag" data-version-tag>2.3.11</span><span class="release-when" data-version-date>10 天前</span><a href="https://github.com/2dust/v2rayNG/releases/tag/2.3.11" target="_blank" rel="noopener" data-version-link>GitHub ↗</a></div>
+      <div class="rows"><a class="row" href="https://github.com/2dust/v2rayNG/releases/download/2.3.11/v2rayNG_2.3.11_arm64-v8a.apk" data-url="https://github.com/2dust/v2rayNG/releases/download/2.3.11/v2rayNG_2.3.11_arm64-v8a.apk" data-app="v2rayNG" data-plat="安卓 arm64 APK" data-size="32.0 MB" target="_blank" rel="noopener"><svg class="pico and" viewBox="0 0 24 24" fill="currentColor"><path d="M6.2 5.4 5 3.6a.6.6 0 0 1 1-.7l1.25 1.85A7.6 7.6 0 0 1 12 4c1.75 0 3.37.4 4.75 1.1L18 3.4a.6.6 0 1 1 1 .7l-1.2 1.8A6.5 6.5 0 0 1 21 11H3a6.5 6.5 0 0 1 3.2-5.6ZM7.5 8.4a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9Zm9 0a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9ZM3 12h18v6.6A1.4 1.4 0 0 1 19.6 20H4.4A1.4 1.4 0 0 1 3 18.6Z"/></svg><span class="rname">安卓 arm64</span><span class="rtag apk">APK</span><span class="rsize">32.0 MB</span></a></div>
+    </div><div class="release-panel" data-release-panel="prerelease" hidden>
+      <div class="release-meta"><span class="tag pre" data-version-tag>2.3.12 · 预发布</span><span class="release-when" data-version-date>3 天前</span><a href="https://github.com/2dust/v2rayNG/releases/tag/2.3.12" target="_blank" rel="noopener" data-version-link>GitHub ↗</a></div>
+      <div class="rows"><a class="row" href="https://github.com/2dust/v2rayNG/releases/download/2.3.12/v2rayNG_2.3.12_arm64-v8a.apk" data-url="https://github.com/2dust/v2rayNG/releases/download/2.3.12/v2rayNG_2.3.12_arm64-v8a.apk" data-app="v2rayNG" data-plat="安卓 arm64 APK" data-size="30.9 MB" target="_blank" rel="noopener"><svg class="pico and" viewBox="0 0 24 24" fill="currentColor"><path d="M6.2 5.4 5 3.6a.6.6 0 0 1 1-.7l1.25 1.85A7.6 7.6 0 0 1 12 4c1.75 0 3.37.4 4.75 1.1L18 3.4a.6.6 0 1 1 1 .7l-1.2 1.8A6.5 6.5 0 0 1 21 11H3a6.5 6.5 0 0 1 3.2-5.6ZM7.5 8.4a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9Zm9 0a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9ZM3 12h18v6.6A1.4 1.4 0 0 1 19.6 20H4.4A1.4 1.4 0 0 1 3 18.6Z"/></svg><span class="rname">安卓 arm64</span><span class="rtag apk">APK</span><span class="rsize">30.9 MB</span></a></div>
+    </div></div>
+  </div><div class="card reveal" data-search="flclash 基于 clashmeta 的多平台客户端，支持订阅、tun 与规则分流" data-platforms="android windows">
+    <div class="card-head"><img class="appico" src="data:image/webp;base64,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" alt="" width="30" height="30"><div class="ch-info">
+      <div class="ch-title"><h3>FlClash</h3><span class="stars" title="GitHub stars">★ 57.3k</span></div>
+      <div class="ch-desc">基于 ClashMeta 的多平台客户端，支持订阅、TUN 与规则分流</div>
+      
+    </div></div>
+    <div class="release-views"><div class="release-panel" data-release-panel="stable">
+      <div class="release-meta"><span class="tag" data-version-tag>v0.9.1</span><span class="release-when" data-version-date>4 天前</span><a href="https://github.com/chen08209/FlClash/releases/tag/v0.9.1" target="_blank" rel="noopener" data-version-link>GitHub ↗</a></div>
+      <div class="rows"><a class="row" href="https://github.com/chen08209/FlClash/releases/download/v0.9.1/FlClash-0.9.1-android-arm64-v8a.apk" data-url="https://github.com/chen08209/FlClash/releases/download/v0.9.1/FlClash-0.9.1-android-arm64-v8a.apk" data-app="FlClash" data-plat="安卓 arm64 APK" data-size="58.1 MB" target="_blank" rel="noopener"><svg class="pico and" viewBox="0 0 24 24" fill="currentColor"><path d="M6.2 5.4 5 3.6a.6.6 0 0 1 1-.7l1.25 1.85A7.6 7.6 0 0 1 12 4c1.75 0 3.37.4 4.75 1.1L18 3.4a.6.6 0 1 1 1 .7l-1.2 1.8A6.5 6.5 0 0 1 21 11H3a6.5 6.5 0 0 1 3.2-5.6ZM7.5 8.4a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9Zm9 0a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9ZM3 12h18v6.6A1.4 1.4 0 0 1 19.6 20H4.4A1.4 1.4 0 0 1 3 18.6Z"/></svg><span class="rname">安卓 arm64</span><span class="rtag apk">APK</span><span class="rsize">58.1 MB</span></a><a class="row" href="https://github.com/chen08209/FlClash/releases/download/v0.9.1/FlClash-0.9.1-windows-amd64-setup.exe" data-url="https://github.com/chen08209/FlClash/releases/download/v0.9.1/FlClash-0.9.1-windows-amd64-setup.exe" data-app="FlClash" data-plat="Windows x64 安装版" data-size="41.2 MB" target="_blank" rel="noopener"><svg class="pico win" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6 10.4 4.5v7.1H3Zm8.4-1.3L21 3v8.6h-9.6ZM3 12.7h7.4v7L3 18.5Zm8.4 0H21V21l-9.6-1.3Z"/></svg><span class="rname">Windows x64</span><span class="rtag install">安装版</span><span class="rsize">41.2 MB</span></a><a class="row" href="https://github.com/chen08209/FlClash/releases/download/v0.9.1/FlClash-0.9.1-windows-amd64.zip" data-url="https://github.com/chen08209/FlClash/releases/download/v0.9.1/FlClash-0.9.1-windows-amd64.zip" data-app="FlClash" data-plat="Windows x64 免安装" data-size="65.5 MB" target="_blank" rel="noopener"><svg class="pico win" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6 10.4 4.5v7.1H3Zm8.4-1.3L21 3v8.6h-9.6ZM3 12.7h7.4v7L3 18.5Zm8.4 0H21V21l-9.6-1.3Z"/></svg><span class="rname">Windows x64</span><span class="rtag portable">免安装</span><span class="rsize">65.5 MB</span></a></div>
+    </div></div>
+  </div><div class="card reveal" data-search="nekobox 基于 sing-box 的安卓客户端，支持链式代理与多种协议" data-platforms="android">
+    <div class="card-head"><img class="appico" src="data:image/webp;base64,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" alt="" width="30" height="30"><div class="ch-info">
+      <div class="ch-title"><h3>NekoBox</h3><span class="stars" title="GitHub stars">★ 23.2k</span></div>
+      <div class="ch-desc">基于 sing-box 的安卓客户端，支持链式代理与多种协议</div>
+      
+    </div></div>
+    <div class="release-views"><div class="release-panel" data-release-panel="stable">
+      <div class="release-meta"><span class="tag" data-version-tag>1.4.2</span><span class="release-when" data-version-date>8 个月前</span><a href="https://github.com/MatsuriDayo/NekoBoxForAndroid/releases/tag/1.4.2" target="_blank" rel="noopener" data-version-link>GitHub ↗</a></div>
+      <div class="rows"><a class="row" href="https://github.com/MatsuriDayo/NekoBoxForAndroid/releases/download/1.4.2/NekoBox-1.4.2-arm64-v8a.apk" data-url="https://github.com/MatsuriDayo/NekoBoxForAndroid/releases/download/1.4.2/NekoBox-1.4.2-arm64-v8a.apk" data-app="NekoBox" data-plat="安卓 arm64 APK" data-size="14.5 MB" target="_blank" rel="noopener"><svg class="pico and" viewBox="0 0 24 24" fill="currentColor"><path d="M6.2 5.4 5 3.6a.6.6 0 0 1 1-.7l1.25 1.85A7.6 7.6 0 0 1 12 4c1.75 0 3.37.4 4.75 1.1L18 3.4a.6.6 0 1 1 1 .7l-1.2 1.8A6.5 6.5 0 0 1 21 11H3a6.5 6.5 0 0 1 3.2-5.6ZM7.5 8.4a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9Zm9 0a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9ZM3 12h18v6.6A1.4 1.4 0 0 1 19.6 20H4.4A1.4 1.4 0 0 1 3 18.6Z"/></svg><span class="rname">安卓 arm64</span><span class="rtag apk">APK</span><span class="rsize">14.5 MB</span></a></div>
+    </div></div>
+  </div><div class="card reveal" data-search="gui.for.singbox sing-box 图形界面客户端，提供桌面代理配置管理" data-platforms="windows">
+    <div class="card-head"><img class="appico" src="data:image/webp;base64,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" alt="" width="30" height="30"><div class="ch-info">
+      <div class="ch-title"><h3>GUI.for.SingBox</h3><span class="stars" title="GitHub stars">★ 8.2k</span></div>
+      <div class="ch-desc">sing-box 图形界面客户端，提供桌面代理配置管理</div>
+      
+    </div></div>
+    <div class="release-views"><div class="release-panel" data-release-panel="stable">
+      <div class="release-meta"><span class="tag" data-version-tag>v1.28.1</span><span class="release-when" data-version-date>今天</span><a href="https://github.com/GUI-for-Cores/GUI.for.SingBox/releases/tag/v1.28.1" target="_blank" rel="noopener" data-version-link>GitHub ↗</a></div>
+      <div class="rows"><a class="row" href="https://github.com/GUI-for-Cores/GUI.for.SingBox/releases/download/v1.28.1/GUI.for.SingBox-windows-amd64.zip" data-url="https://github.com/GUI-for-Cores/GUI.for.SingBox/releases/download/v1.28.1/GUI.for.SingBox-windows-amd64.zip" data-app="GUI.for.SingBox" data-plat="Windows x64 免安装" data-size="6.1 MB" target="_blank" rel="noopener"><svg class="pico win" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6 10.4 4.5v7.1H3Zm8.4-1.3L21 3v8.6h-9.6ZM3 12.7h7.4v7L3 18.5Zm8.4 0H21V21l-9.6-1.3Z"/></svg><span class="rname">Windows x64</span><span class="rtag portable">免安装</span><span class="rsize">6.1 MB</span></a></div>
+    </div></div>
+  </div><div class="card reveal" data-search="sparkle 面向桌面的 mihomo 图形界面客户端" data-platforms="windows">
+    <div class="card-head"><img class="appico" src="data:image/webp;base64,UklGRqoFAABXRUJQVlA4WAoAAAAQAAAAXwAAXwAAQUxQSH0BAAABgBvbturmvvuFqSFTB0yZyjDFGjUhdWRK5RYwdiQowezov/+O8OMxZI4ItgHQtgH37mQDXyB/NBpV9VKlqpoUoTmVMNId13iyZqFS66XMWqUga3omMTal7mgy/0Tq/JxPRh0R8ZL+bikNb7FFlzKxxdthSdQkaz17AuDbwLm0c+cC6wN4Ols3JoiH54ANkCEDC5wfxg45aU13ShkXpi3JxSz3n+GDgD6e+7GKKo1nWFDQ4rkhGmOjvcUmsoTFnprotqvdXo7Oa/Ei49EmMoWjiGBMeeoCJgRuWjYmfK8BLKhoMQjfyuijY4N7DB2s0nIOZHSuJRpWH8Nng49xWFXlBpYNFjchiZHCAgEbAiwKYnbzyhf4mvFVEd1F1THCVcPQ20S+0NuFxwvv33+kAHZd5TvoQvy6Fr8uR64rfgddlF/XZdelv4Guzu8LfANfIyJc0/ky/L4StS/20hCl9/XofUl6X5XeF6b3tXl9+fGWL0//roD8XQT7u46/GQUAVlA4IAYEAABwFgCdASpgAGAAPj0aikQiIaEWqRT0IAPEsQBKgab73r8dPyA6ZbdF9s8hbd/t3sL8SvpPeYD9XP3A7CPoAf1zqS+fY9kL++f7f9kvgA/WXNK+wXkjbZ/IJvk3+ot20y/x4/UPsE/yn+ob40fIN42DCqLyqUJRKhPpKf9uMeLgmzojtcOqc6f1qeHvJTg2/TRlJfhwX+g9vLm3bwvuTE/1GppUtPGfiyapoXurulvXTuhCQCGPehYi/cWcoAD++nc//+Tf//8mff//kuBf//6qCBHLPaS8bzvp5rHQd3W5gxoP3FOkFH+AaOWNSLIplRAK5TMENPweuzf7B4yJEXegGfds2wvlgoJai8MdcvLASApT+T59r/eshLYiBZnXq6NGXYojL+6HumasS2+Z1qI7OQ6j72yYtR2ftnkW1KqZuSoOJxxz4XtsvtRsx6vB2NSd0O+YVVnN5TjQi5fhtCJdKeo4M7r1Gnf9ndtZXPNwCBJmgJnEUCCLb+mcuAB63vWJPrbSZNr6+YJI416dn4/ZzarNX+JtW/rVnhcfyrFrfkQq7nRcIdoor1jcRuUgnisk0A9RgTyBK1myCj0lJzZ2tsStT+XICmrqVdxRG/OHiZDEM4O9Aw6aIPdsrrBSS0+aWlb0PUts3sPuiJ4Z7ERAWO+/TbYhAnpivc6uqyBnmR9R1yqr9xJd0LRTisFTv3z2DcGon/uj3WyADD6vfyDQuhvQKDkeHB3JD4SOCa4MAeRhb9A/AIkYuNF6FU82FAsC8oBM4ZeHAdlAH8jP7EB4abGcPJXL0Zs+YMypHFy98YVHb3QJTt/3QbaXQTPFocqMrf7CI5M2+NgPZ+4ll+C9zPREb1TMI8jd9X74UZNrq1xuCguJGhZ1wH4Q++3eEZ1xmsXn0vOvb/3rl8U39nO4O917DZNrH253xya5oZ6C1ueOmq2cdi+5w57NoDYXbRT/5kXx5GxwBS/Ov/341ba+J9RbDOzq9eZ8HIHv+7tftZ8B4ClNXMShmduJ7qeLqnU4gBGcWEEX3zqv64Qx4mY2wvY2sP3+rL/PpPclPel7b7t0NAQO+Jymi27mWaSVPSeXUIn/gipInEF41PzkRK4K3bqz/wIMgNoF3pq/GrvD0heucIIeHOjO7tl+N3q//rQ2peteEVRjm0SBuiFs5ipw4ofepSnPBUyZarNp+LXsKiguJ1DzaCyssfT1KDBfkn70WUrlaPMG5zNk1jP2uvSgrPuCIQtvacjUHlrh+qyCesJllNBFk10A3etV17nS06gUfnAzPJsSNM0bY0s0Kr5inJnvun7rswWSV49zvFfusWPDqF9ahR/w+ggh+W6eO27I4qvblC1hq8av/94lAA3//9VBAAAA" alt="" width="30" height="30"><div class="ch-info">
+      <div class="ch-title"><h3>Sparkle</h3><span class="stars" title="GitHub stars">★ 8k</span></div>
+      <div class="ch-desc">面向桌面的 Mihomo 图形界面客户端</div>
+      <div class="version-line"><div class="version-switch" role="group" aria-label="Sparkle 发布版本">
+      <button type="button" class="version-btn" data-version="stable" aria-pressed="true">稳定版</button>
+      <button type="button" class="version-btn" data-version="prerelease" aria-pressed="false">预发布</button>
+    </div></div>
+    </div></div>
+    <div class="release-views"><div class="release-panel" data-release-panel="stable">
+      <div class="release-meta"><span class="tag" data-version-tag>1.26.9</span><span class="release-when" data-version-date>21 天前</span><a href="https://github.com/xishang0128/sparkle/releases/tag/1.26.9" target="_blank" rel="noopener" data-version-link>GitHub ↗</a></div>
+      <div class="rows"><a class="row" href="https://github.com/xishang0128/sparkle/releases/download/1.26.9/sparkle-windows-1.26.9-x64-setup.exe" data-url="https://github.com/xishang0128/sparkle/releases/download/1.26.9/sparkle-windows-1.26.9-x64-setup.exe" data-app="Sparkle" data-plat="Windows x64 安装版" data-size="181 MB" target="_blank" rel="noopener"><svg class="pico win" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6 10.4 4.5v7.1H3Zm8.4-1.3L21 3v8.6h-9.6ZM3 12.7h7.4v7L3 18.5Zm8.4 0H21V21l-9.6-1.3Z"/></svg><span class="rname">Windows x64</span><span class="rtag install">安装版</span><span class="rsize">181 MB</span></a><a class="row" href="https://github.com/xishang0128/sparkle/releases/download/1.26.9/sparkle-windows-1.26.9-x64-portable.7z" data-url="https://github.com/xishang0128/sparkle/releases/download/1.26.9/sparkle-windows-1.26.9-x64-portable.7z" data-app="Sparkle" data-plat="Windows x64 免安装" data-size="144 MB" target="_blank" rel="noopener"><svg class="pico win" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6 10.4 4.5v7.1H3Zm8.4-1.3L21 3v8.6h-9.6ZM3 12.7h7.4v7L3 18.5Zm8.4 0H21V21l-9.6-1.3Z"/></svg><span class="rname">Windows x64</span><span class="rtag portable">免安装</span><span class="rsize">144 MB</span></a></div>
+    </div><div class="release-panel" data-release-panel="prerelease" hidden>
+      <div class="release-meta"><span class="tag pre" data-version-tag>rolling · 预发布</span><span class="release-when" data-version-date>3 个月前</span><a href="https://github.com/xishang0128/sparkle/releases/tag/rolling" target="_blank" rel="noopener" data-version-link>GitHub ↗</a></div>
+      <div class="rows"><a class="row" href="https://github.com/xishang0128/sparkle/releases/download/rolling/sparkle-windows-1.26.10-rolling-f6e6df1-x64-setup.exe" data-url="https://github.com/xishang0128/sparkle/releases/download/rolling/sparkle-windows-1.26.10-rolling-f6e6df1-x64-setup.exe" data-app="Sparkle" data-plat="Windows x64 安装版" data-size="181 MB" target="_blank" rel="noopener"><svg class="pico win" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6 10.4 4.5v7.1H3Zm8.4-1.3L21 3v8.6h-9.6ZM3 12.7h7.4v7L3 18.5Zm8.4 0H21V21l-9.6-1.3Z"/></svg><span class="rname">Windows x64</span><span class="rtag install">安装版</span><span class="rsize">181 MB</span></a><a class="row" href="https://github.com/xishang0128/sparkle/releases/download/rolling/sparkle-windows-1.26.10-rolling-f6e6df1-x64-portable.7z" data-url="https://github.com/xishang0128/sparkle/releases/download/rolling/sparkle-windows-1.26.10-rolling-f6e6df1-x64-portable.7z" data-app="Sparkle" data-plat="Windows x64 免安装" data-size="144 MB" target="_blank" rel="noopener"><svg class="pico win" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6 10.4 4.5v7.1H3Zm8.4-1.3L21 3v8.6h-9.6ZM3 12.7h7.4v7L3 18.5Zm8.4 0H21V21l-9.6-1.3Z"/></svg><span class="rname">Windows x64</span><span class="rtag portable">免安装</span><span class="rsize">144 MB</span></a></div>
+    </div></div>
+  </div><div class="card reveal" data-search="bettbox 基于 mihomo 的跨平台代理客户端，支持订阅与规则管理" data-platforms="android windows">
+    <div class="card-head"><img class="appico" src="data:image/webp;base64,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" alt="" width="30" height="30"><div class="ch-info">
+      <div class="ch-title"><h3>BettBox</h3><span class="stars" title="GitHub stars">★ 4.3k</span></div>
+      <div class="ch-desc">基于 Mihomo 的跨平台代理客户端，支持订阅与规则管理</div>
+      <div class="version-line"><div class="version-switch" role="group" aria-label="BettBox 发布版本">
+      <button type="button" class="version-btn" data-version="stable" aria-pressed="true">稳定版</button>
+      <button type="button" class="version-btn" data-version="prerelease" aria-pressed="false">预发布</button>
+    </div></div>
+    </div></div>
+    <div class="release-views"><div class="release-panel" data-release-panel="stable">
+      <div class="release-meta"><span class="tag" data-version-tag>v1.19.6</span><span class="release-when" data-version-date>5 天前</span><a href="https://github.com/appshubcc/Bettbox/releases/tag/v1.19.6" target="_blank" rel="noopener" data-version-link>GitHub ↗</a></div>
+      <div class="rows"><a class="row" href="https://github.com/appshubcc/Bettbox/releases/download/v1.19.6/Bettbox-1.19.6-android-arm64-v8a.apk" data-url="https://github.com/appshubcc/Bettbox/releases/download/v1.19.6/Bettbox-1.19.6-android-arm64-v8a.apk" data-app="BettBox" data-plat="安卓 arm64 APK" data-size="51.2 MB" target="_blank" rel="noopener"><svg class="pico and" viewBox="0 0 24 24" fill="currentColor"><path d="M6.2 5.4 5 3.6a.6.6 0 0 1 1-.7l1.25 1.85A7.6 7.6 0 0 1 12 4c1.75 0 3.37.4 4.75 1.1L18 3.4a.6.6 0 1 1 1 .7l-1.2 1.8A6.5 6.5 0 0 1 21 11H3a6.5 6.5 0 0 1 3.2-5.6ZM7.5 8.4a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9Zm9 0a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9ZM3 12h18v6.6A1.4 1.4 0 0 1 19.6 20H4.4A1.4 1.4 0 0 1 3 18.6Z"/></svg><span class="rname">安卓 arm64</span><span class="rtag apk">APK</span><span class="rsize">51.2 MB</span></a><a class="row" href="https://github.com/appshubcc/Bettbox/releases/download/v1.19.6/Bettbox-1.19.6-windows-amd64-setup.exe" data-url="https://github.com/appshubcc/Bettbox/releases/download/v1.19.6/Bettbox-1.19.6-windows-amd64-setup.exe" data-app="BettBox" data-plat="Windows x64 安装版" data-size="40.0 MB" target="_blank" rel="noopener"><svg class="pico win" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6 10.4 4.5v7.1H3Zm8.4-1.3L21 3v8.6h-9.6ZM3 12.7h7.4v7L3 18.5Zm8.4 0H21V21l-9.6-1.3Z"/></svg><span class="rname">Windows x64</span><span class="rtag install">安装版</span><span class="rsize">40.0 MB</span></a><a class="row" href="https://github.com/appshubcc/Bettbox/releases/download/v1.19.6/Bettbox-1.19.6-windows-amd64-compatible-portable.zip" data-url="https://github.com/appshubcc/Bettbox/releases/download/v1.19.6/Bettbox-1.19.6-windows-amd64-compatible-portable.zip" data-app="BettBox" data-plat="Windows x64 免安装" data-size="56.8 MB" target="_blank" rel="noopener"><svg class="pico win" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6 10.4 4.5v7.1H3Zm8.4-1.3L21 3v8.6h-9.6ZM3 12.7h7.4v7L3 18.5Zm8.4 0H21V21l-9.6-1.3Z"/></svg><span class="rname">Windows x64</span><span class="rtag portable">免安装</span><span class="rsize">56.8 MB</span></a></div>
+    </div><div class="release-panel" data-release-panel="prerelease" hidden>
+      <div class="release-meta"><span class="tag pre" data-version-tag>v1.19.7-pre1 · 预发布</span><span class="release-when" data-version-date>今天</span><a href="https://github.com/appshubcc/Bettbox/releases/tag/v1.19.7-pre1" target="_blank" rel="noopener" data-version-link>GitHub ↗</a></div>
+      <div class="rows"><a class="row" href="https://github.com/appshubcc/Bettbox/releases/download/v1.19.7-pre1/Bettbox-1.19.7-android-arm64-v8a.apk" data-url="https://github.com/appshubcc/Bettbox/releases/download/v1.19.7-pre1/Bettbox-1.19.7-android-arm64-v8a.apk" data-app="BettBox" data-plat="安卓 arm64 APK" data-size="51.9 MB" target="_blank" rel="noopener"><svg class="pico and" viewBox="0 0 24 24" fill="currentColor"><path d="M6.2 5.4 5 3.6a.6.6 0 0 1 1-.7l1.25 1.85A7.6 7.6 0 0 1 12 4c1.75 0 3.37.4 4.75 1.1L18 3.4a.6.6 0 1 1 1 .7l-1.2 1.8A6.5 6.5 0 0 1 21 11H3a6.5 6.5 0 0 1 3.2-5.6ZM7.5 8.4a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9Zm9 0a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9ZM3 12h18v6.6A1.4 1.4 0 0 1 19.6 20H4.4A1.4 1.4 0 0 1 3 18.6Z"/></svg><span class="rname">安卓 arm64</span><span class="rtag apk">APK</span><span class="rsize">51.9 MB</span></a><a class="row" href="https://github.com/appshubcc/Bettbox/releases/download/v1.19.7-pre1/Bettbox-1.19.7-windows-amd64-setup.exe" data-url="https://github.com/appshubcc/Bettbox/releases/download/v1.19.7-pre1/Bettbox-1.19.7-windows-amd64-setup.exe" data-app="BettBox" data-plat="Windows x64 安装版" data-size="40.5 MB" target="_blank" rel="noopener"><svg class="pico win" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6 10.4 4.5v7.1H3Zm8.4-1.3L21 3v8.6h-9.6ZM3 12.7h7.4v7L3 18.5Zm8.4 0H21V21l-9.6-1.3Z"/></svg><span class="rname">Windows x64</span><span class="rtag install">安装版</span><span class="rsize">40.5 MB</span></a><a class="row" href="https://github.com/appshubcc/Bettbox/releases/download/v1.19.7-pre1/Bettbox-1.19.7-windows-amd64-compatible-portable.zip" data-url="https://github.com/appshubcc/Bettbox/releases/download/v1.19.7-pre1/Bettbox-1.19.7-windows-amd64-compatible-portable.zip" data-app="BettBox" data-plat="Windows x64 免安装" data-size="53.6 MB" target="_blank" rel="noopener"><svg class="pico win" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6 10.4 4.5v7.1H3Zm8.4-1.3L21 3v8.6h-9.6ZM3 12.7h7.4v7L3 18.5Zm8.4 0H21V21l-9.6-1.3Z"/></svg><span class="rname">Windows x64</span><span class="rtag portable">免安装</span><span class="rsize">53.6 MB</span></a></div>
+    </div></div>
+  </div>
+  </div>
+  <div class="group">
+    <div class="sec"><h2>其他工具</h2><span class="count">4</span><span class="rule"></span></div>
+    <div class="card reveal" data-search="operit ai 安卓 ai agent，支持工具调用、界面自动化与本地沙盒" data-platforms="android">
+    <div class="card-head"><img class="appico" src="data:image/webp;base64,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" alt="" width="30" height="30"><div class="ch-info">
+      <div class="ch-title"><h3>Operit AI</h3><span class="stars" title="GitHub stars">★ 8.9k</span></div>
+      <div class="ch-desc">安卓 AI Agent，支持工具调用、界面自动化与本地沙盒</div>
+      
+    </div></div>
+    <div class="release-views"><div class="release-panel" data-release-panel="stable">
+      <div class="release-meta"><span class="tag" data-version-tag>v1.12.2</span><span class="release-when" data-version-date>1 个月前</span><a href="https://github.com/AAswordman/Operit/releases/tag/v1.12.2" target="_blank" rel="noopener" data-version-link>GitHub ↗</a></div>
+      <div class="rows"><a class="row" href="https://github.com/AAswordman/Operit/releases/download/v1.12.2/app-release.apk" data-url="https://github.com/AAswordman/Operit/releases/download/v1.12.2/app-release.apk" data-app="Operit AI" data-plat="安卓 arm64 APK" data-size="386 MB" target="_blank" rel="noopener"><svg class="pico and" viewBox="0 0 24 24" fill="currentColor"><path d="M6.2 5.4 5 3.6a.6.6 0 0 1 1-.7l1.25 1.85A7.6 7.6 0 0 1 12 4c1.75 0 3.37.4 4.75 1.1L18 3.4a.6.6 0 1 1 1 .7l-1.2 1.8A6.5 6.5 0 0 1 21 11H3a6.5 6.5 0 0 1 3.2-5.6ZM7.5 8.4a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9Zm9 0a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9ZM3 12h18v6.6A1.4 1.4 0 0 1 19.6 20H4.4A1.4 1.4 0 0 1 3 18.6Z"/></svg><span class="rname">安卓 arm64</span><span class="rtag apk">APK</span><span class="rsize">386 MB</span></a></div>
+    </div></div>
+  </div><div class="card reveal" data-search="rikkahub 安卓 llm 聊天客户端，可接入多家服务商与自定义接口" data-platforms="android">
+    <div class="card-head"><img class="appico" src="data:image/webp;base64,UklGRjYHAABXRUJQVlA4WAoAAAAQAAAAXwAAXwAAQUxQSIIBAAABkJtt2/Jk95MnlJEq2QFYhbCHjkBYADbIwRjuvgCpsE5Lh1dufoveVL9FBCO3kRRVemZh4LpQ9QJ0wBzA6FTr5PqVQ+L1+qQ1NQrADT0AB+qzu88cOs+7s3XAu8sKqDZvSKaY8vCUU0wkb+ZLKFi3Zmi0ydBpbJhDgTxrwDpXAcVFMmaKkCO5WEShYyuvMCYKkSJXyh3KrLLFD4rxwa3KL4PmxVUGyhG4WvSfyrH087ne6RL8pzbRdX+h7SfgMKue50RJUj4vmTmaDBQlcB6O+sOPo+rhoQbMMVKWyGn4QVZWPvDxd2ZdZb6PTzFRmMSpZeURMnL5VL07vVYeITOvXinOI+X5779+g+tVXU/6/3X1/0vr/1fX9wX0fQ19X0bfV9L3xRwLyr5eE25WvdD2JbV91Qb8C/jCgPmIqq894ibvy8vnCr5OLgIww2SbjBq5jki2J2HWPZdSEsqlNHvIpQBwoDalkauZqgGOHoA5gLHp1unV09Ce8VenremxbrkgAFZQOCCOBQAA0B0AnQEqYABgAD49GotDIiGhFVleqCADxLSAasQItWdPyI6Hz13zjH2S+0fk9yg7UP6dfTNyhpnHe3/KeiT/deQCoAfyz+l/5b7wPpa/pf+X/kPyg9sX5x/ff+N7hP8m/q3+5/uftAeyP0eP2HAuOHU+tuLSo1OttQuhuYS9dq5USt0lhOMwBen6AyHW6eBLPOd99Y3Y4ci2IZIYZq0tobZVe2LDoZcbZnU6G9OwCUr3DYTDI7n0DenvOiaudgKE/E29CF5lP+6cg/saRu3ofSBCzuGJ4I/WXoUQDpayBFc6g8tp/LCi5Ky/y5ESf0h3pIP3V0OSAAD+78zf7nB+/XDHyLTGsk8m6TBn2qVR2fzFVGkMIuQRZsxmpsPdMUNfmHRlH+udHKHTlu8yWFvTAkePBHHRJPkx5wMnD5xFITjRXQpztaI5BlvBtxHR+lkYlU5L83WmtrakvHzN0SQ3+LxnG5rjfKKvZR14/lo5AnM+OMF07Ej/jTf/VMxOiMHc27tIuIbNXnmMwMQ08JB6vpbEyWu/fZ1X/nPkR++dXrxPgH4zXr34aZ8ZIlUgJqTrdzZ4H0BY+lor0izc//n2ulyY1KpGdXO4dnmLMkNrFfNVo1MuUpAnCMgb6OvQwU7EmxjoGAhXQgFkrpM02QNIJgvvK0/VIKb8rTri6MxEqbgHvDMPDwrVDyrmv237l9VVAG9aWeIZqs2hFMZxW1uuD3TdKgsl9qUriP0En/lPm/M/56b/kswoqD01UdnPYEfarjW3vTsBSoEv5mHV0/hLYR25khy8Q8TrlsV0HD/6lPk00bFPQHVZLYh1WA4BLYmQ3pI9H+x7nUj7RgElEb2DYXxT/ZpNNlMttsU/2rCHQztg+fTKC6gVochcgstvtKM3x63oAOOU7QnCI8nNhQNQF+yN58XovvPkauG2AcNPdkEIrYx2EsCCuczHuWFoGGEIrqn+slIMFmyor8NPyTE5PdSesv9F9FsePn9fXW8f8D5JUTpywlfN8KOQ7kPKHV7quDKEQ4d2hhU6dHPkvSm00WT4//A+L3CS5iKJN2WZ0l6DpsLNQK56roxYzShRvyrN1J1z+kbBbjzHhPgdC1+gdJJGmjogpDY7jvJDXG371d9g2padWaf58nSbZEINd6Jnx8iOAxBeFrekfy26jqq+B8M5RMU+b4GhaVV+OCw0/9e8p8LTcXk4UR80bzjsM0mvvtJGAJmixLFpNPOIUYsjIsfYrR46r4Nv+APsQ/LXfNg49HRdMeh/ukqrzyApL55G7agEBSPKIaGwL/pfmHxWdc2zw21LVfYq1+3knIrfnMgtgQyyLOJjpdb5YzAb9r16/jWuxOC4rrODCPYG0OEmiAB4v/pRlGd/k7cpKpGRn2AGKuVc6Zy6Vln6X+Dzww/mv0VnGc8sIXLl/FOSLCQ6zuIBsDwTT3FLnoYmR0tFWbd4lnw1TqKJ35BIQKZnNjDQ/eJhvpjJoQw5eYsu13lrZTA83RaUt59Cj1rgopnouZHo6cP9B4mAqdJ2kuedJPMQEw2P3trt9+RGv35F9SldewqZm4tb37GxTa+B5UGnh+hFdAAJy0K/NG3WC5EbOzmc7R692biPlabtWUlopx/WcrfCqbNuPdLzBJL692X/6KK97qaDqX9XKX+5KuDTRJAMAgTNLfCXk7QGZB0G1/4tH9DJhEKJS3+ciQAbVBrfBY5ew/C5PjDEGhB7Uc4jL+TJ55TDi70XRHG/4W4q+bTxOgodjCtRd3MPrB3TkwQG8+K3a1XWz7//dniDOa9NCUTXAYTSZAHs0eOLPBw1ONBIRX1EExktEBo1qoJPTUngaQCH7W7lWNLDe+1a1KeP2ikPoTMN1L5x117JvUbMQAIaCKd0L29IlLJjvtXXIAAA" alt="" width="30" height="30"><div class="ch-info">
+      <div class="ch-title"><h3>RikkaHub</h3><span class="stars" title="GitHub stars">★ 8.4k</span></div>
+      <div class="ch-desc">安卓 LLM 聊天客户端，可接入多家服务商与自定义接口</div>
+      
+    </div></div>
+    <div class="release-views"><div class="release-panel" data-release-panel="stable">
+      <div class="release-meta"><span class="tag" data-version-tag>3.1.0</span><span class="release-when" data-version-date>2 天前</span><a href="https://github.com/rikkahub/rikkahub/releases/tag/3.1.0" target="_blank" rel="noopener" data-version-link>GitHub ↗</a></div>
+      <div class="rows"><a class="row" href="https://github.com/rikkahub/rikkahub/releases/download/3.1.0/rikkahub-3.1.0-arm64-v8a.apk" data-url="https://github.com/rikkahub/rikkahub/releases/download/3.1.0/rikkahub-3.1.0-arm64-v8a.apk" data-app="RikkaHub" data-plat="安卓 arm64 APK" data-size="40.1 MB" target="_blank" rel="noopener"><svg class="pico and" viewBox="0 0 24 24" fill="currentColor"><path d="M6.2 5.4 5 3.6a.6.6 0 0 1 1-.7l1.25 1.85A7.6 7.6 0 0 1 12 4c1.75 0 3.37.4 4.75 1.1L18 3.4a.6.6 0 1 1 1 .7l-1.2 1.8A6.5 6.5 0 0 1 21 11H3a6.5 6.5 0 0 1 3.2-5.6ZM7.5 8.4a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9Zm9 0a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9ZM3 12h18v6.6A1.4 1.4 0 0 1 19.6 20H4.4A1.4 1.4 0 0 1 3 18.6Z"/></svg><span class="rname">安卓 arm64</span><span class="rtag apk">APK</span><span class="rsize">40.1 MB</span></a></div>
+    </div></div>
+  </div><div class="card reveal" data-search="minis 跨平台 ai agent，内置 linux 沙盒可执行命令与脚本" data-platforms="android">
+    <div class="card-head"><img class="appico" src="data:image/webp;base64,UklGRg4EAABXRUJQVlA4IAIEAAAQFgCdASpgAGAAPj0ai0QiIaEUCOY4IAPEsYM4BoPmNj5OiDi7fG7lfQA6YBf7oHdYwM/8o0e77EL14yeJnuGExLA+CAPTZpCRZv4D35AJOcv/8AG5WAKdOLQqNTNRRVPxwF58qogxigy++vfyJv5ihh+zrvW2X7a5PcmhOQnPpLduE3bFRrwezTE+JtrGu3cd9s4M3ixExcwXjdd5WPSW73efmAbLfeWJL02zZtnF8qSwrkpiHToGbAD+/odj8lJKezmI2e2LzGng/B2FcpF8yxEWnnOtueSCl6w6VF7tPgQnSZPShCLMGeA5PNW+gf7arY5Xfj4Dx3hjydnIzlErQEc6OU7It9XTynHcZkKKz6TCFZb7Ye+NLekD5BN594rGrv7C3DlWVb64l03yuUFVQWA2Os1ERGGINvQb5cU0Cw8W0XJGqVGCsqohiahnnapMFFnzYHrfsHKv85gJaDlLMNRXiBM6/XhKi3ojwmtNE7wOt14PYv5li8srjq2B+mlwh3GJIw4ffgBPYIdtXLCXSGV5JL1sb3Ga2/izD4X89Smp1G9nfcuXXvTYGXLYE2R9XVvuuliE+iw1SyICQLUNkdYeSQ/DUODBVXqUTXOeL+tYzfD5668maKlCGOC2jQQ7fHI5Uc399BLORkaLW80+Z2rM8IQBNrjhqe+OaxeJI6nnztCSiO9tj/ZCu+E3DBabCiaKVhaO1gf8bhgajhr9B2dpFOzjtMfouKZEE9O7RcUxZIZuXtDXK/tXcO1A3jquEWdWqUy+yqSp1f5KhmuL+I/ANID1KsGFFRWgs22U+bFHpUNqXl/roIR/rVzIC7X0reIRddbYPSSgJVOD8oYT+1u82f4XPMlrGNQBkepIfeiQK872+aQHvh0HqJVcsx5R7AC7b7n8DwNPkY6P2Xed97vWfZagucf//sHf+0twyZxBMjep1++ZzrX7Ayox59TKqX1g7VoCKkhmfcSJkUkb6k+g84pT/s6fHMRxbnAMXW8BsUAdJr0+74PdBqy8KZnUNlF+0omFFPeBs46paFrMTIKkVam2t3N/WvoIB/D5EFAUKBC9SqSNeP4S5gipm2HwiZD+na0hhpt3yGbX6bqHfF7kVpTBOBgewZl//tVx8tT417HH09+GybYHFSy5sDY+NOTX6tcdnZnSNf3XMGZAZC6biu2Go0u6u3R2LcdDf90M4iLp1VofQHxpAIJBMbSAqoXzuu8As7gVyGCyXzjAuumLfk36xKIPI/yf5dNaNccPj2cGklxukCDwgSiOw1s9HWnCusZFD8xSZHKx26e4k7luuYC5wwgpX3X2KarWYP3/4VTg2CU6iBuqWB6r35SoEtXHqDFne2RZztGmwtLQAAA=" alt="" width="30" height="30"><div class="ch-info">
+      <div class="ch-title"><h3>Minis</h3><span class="stars" title="GitHub stars">★ 5.4k</span></div>
+      <div class="ch-desc">跨平台 AI Agent，内置 Linux 沙盒可执行命令与脚本</div>
+      <div class="version-line"><div class="version-switch" role="group" aria-label="Minis 发布版本">
+      <button type="button" class="version-btn" data-version="stable" aria-pressed="true">稳定版</button>
+      <button type="button" class="version-btn" data-version="prerelease" aria-pressed="false">预发布</button>
+    </div></div>
+    </div></div>
+    <div class="release-views"><div class="release-panel" data-release-panel="stable">
+      <div class="release-meta"><span class="tag" data-version-tag>1.14</span><span class="release-when" data-version-date>22 天前</span><a href="https://github.com/OpenMinis/OpenMinis/releases/tag/1.14" target="_blank" rel="noopener" data-version-link>GitHub ↗</a></div>
+      <div class="rows"><a class="row" href="https://github.com/OpenMinis/OpenMinis/releases/download/1.14/MinisApp-1.14-arm64-v8a.apk" data-url="https://github.com/OpenMinis/OpenMinis/releases/download/1.14/MinisApp-1.14-arm64-v8a.apk" data-app="Minis" data-plat="安卓 arm64 APK" data-size="40.3 MB" target="_blank" rel="noopener"><svg class="pico and" viewBox="0 0 24 24" fill="currentColor"><path d="M6.2 5.4 5 3.6a.6.6 0 0 1 1-.7l1.25 1.85A7.6 7.6 0 0 1 12 4c1.75 0 3.37.4 4.75 1.1L18 3.4a.6.6 0 1 1 1 .7l-1.2 1.8A6.5 6.5 0 0 1 21 11H3a6.5 6.5 0 0 1 3.2-5.6ZM7.5 8.4a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9Zm9 0a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9ZM3 12h18v6.6A1.4 1.4 0 0 1 19.6 20H4.4A1.4 1.4 0 0 1 3 18.6Z"/></svg><span class="rname">安卓 arm64</span><span class="rtag apk">APK</span><span class="rsize">40.3 MB</span></a></div>
+    </div><div class="release-panel" data-release-panel="prerelease" hidden>
+      <div class="release-meta"><span class="tag pre" data-version-tag>0-beta-build34 · 预发布</span><span class="release-when" data-version-date>4 天前</span><a href="https://github.com/OpenMinis/OpenMinis/releases/tag/0-beta-build34" target="_blank" rel="noopener" data-version-link>GitHub ↗</a></div>
+      <div class="rows"><a class="row" href="https://github.com/OpenMinis/OpenMinis/releases/download/0-beta-build34/MinisApp-1.15-beta.5-build34-arm64-v8a.apk" data-url="https://github.com/OpenMinis/OpenMinis/releases/download/0-beta-build34/MinisApp-1.15-beta.5-build34-arm64-v8a.apk" data-app="Minis" data-plat="安卓 arm64 APK" data-size="42.1 MB" target="_blank" rel="noopener"><svg class="pico and" viewBox="0 0 24 24" fill="currentColor"><path d="M6.2 5.4 5 3.6a.6.6 0 0 1 1-.7l1.25 1.85A7.6 7.6 0 0 1 12 4c1.75 0 3.37.4 4.75 1.1L18 3.4a.6.6 0 1 1 1 .7l-1.2 1.8A6.5 6.5 0 0 1 21 11H3a6.5 6.5 0 0 1 3.2-5.6ZM7.5 8.4a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9Zm9 0a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9ZM3 12h18v6.6A1.4 1.4 0 0 1 19.6 20H4.4A1.4 1.4 0 0 1 3 18.6Z"/></svg><span class="rname">安卓 arm64</span><span class="rtag apk">APK</span><span class="rsize">42.1 MB</span></a></div>
+    </div></div>
+  </div><div class="card reveal" data-search="kelivo flutter 编写的多平台 llm 客户端，支持多模型切换" data-platforms="android windows">
+    <div class="card-head"><img class="appico" src="data:image/webp;base64,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" alt="" width="30" height="30"><div class="ch-info">
+      <div class="ch-title"><h3>Kelivo</h3><span class="stars" title="GitHub stars">★ 4.3k</span></div>
+      <div class="ch-desc">Flutter 编写的多平台 LLM 客户端，支持多模型切换</div>
+      
+    </div></div>
+    <div class="release-views"><div class="release-panel" data-release-panel="stable">
+      <div class="release-meta"><span class="tag" data-version-tag>v1.3.1</span><span class="release-when" data-version-date>12 天前</span><a href="https://github.com/Chevey339/kelivo/releases/tag/v1.3.1" target="_blank" rel="noopener" data-version-link>GitHub ↗</a></div>
+      <div class="rows"><a class="row" href="https://github.com/Chevey339/kelivo/releases/download/v1.3.1/Kelivo_android_1.3.1%2B80_arm64-v8a.apk" data-url="https://github.com/Chevey339/kelivo/releases/download/v1.3.1/Kelivo_android_1.3.1%2B80_arm64-v8a.apk" data-app="Kelivo" data-plat="安卓 arm64 APK" data-size="36.4 MB" target="_blank" rel="noopener"><svg class="pico and" viewBox="0 0 24 24" fill="currentColor"><path d="M6.2 5.4 5 3.6a.6.6 0 0 1 1-.7l1.25 1.85A7.6 7.6 0 0 1 12 4c1.75 0 3.37.4 4.75 1.1L18 3.4a.6.6 0 1 1 1 .7l-1.2 1.8A6.5 6.5 0 0 1 21 11H3a6.5 6.5 0 0 1 3.2-5.6ZM7.5 8.4a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9Zm9 0a.95.95 0 1 0 0 1.9.95.95 0 0 0 0-1.9ZM3 12h18v6.6A1.4 1.4 0 0 1 19.6 20H4.4A1.4 1.4 0 0 1 3 18.6Z"/></svg><span class="rname">安卓 arm64</span><span class="rtag apk">APK</span><span class="rsize">36.4 MB</span></a><a class="row" href="https://github.com/Chevey339/kelivo/releases/download/v1.3.1/Kelivo_windows_1.3.1%2B80_setup.exe" data-url="https://github.com/Chevey339/kelivo/releases/download/v1.3.1/Kelivo_windows_1.3.1%2B80_setup.exe" data-app="Kelivo" data-plat="Windows x64 安装版" data-size="25.8 MB" target="_blank" rel="noopener"><svg class="pico win" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6 10.4 4.5v7.1H3Zm8.4-1.3L21 3v8.6h-9.6ZM3 12.7h7.4v7L3 18.5Zm8.4 0H21V21l-9.6-1.3Z"/></svg><span class="rname">Windows x64</span><span class="rtag install">安装版</span><span class="rsize">25.8 MB</span></a><a class="row" href="https://github.com/Chevey339/kelivo/releases/download/v1.3.1/Kelivo_windows_1.3.1%2B80.zip" data-url="https://github.com/Chevey339/kelivo/releases/download/v1.3.1/Kelivo_windows_1.3.1%2B80.zip" data-app="Kelivo" data-plat="Windows x64 免安装" data-size="34.9 MB" target="_blank" rel="noopener"><svg class="pico win" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.6 10.4 4.5v7.1H3Zm8.4-1.3L21 3v8.6h-9.6ZM3 12.7h7.4v7L3 18.5Zm8.4 0H21V21l-9.6-1.3Z"/></svg><span class="rname">Windows x64</span><span class="rtag portable">免安装</span><span class="rsize">34.9 MB</span></a></div>
+    </div></div>
+  </div>
+  </div>
+  <footer>数据来源：GitHub 官方 Release · 数据时间见顶部 · <a href="mailto:feedback@hoik.de">反馈问题</a></footer>
+</div>
+
+<div class="backdrop" id="bd"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="选择下载线路" aria-hidden="true">
+  <div class="grab"></div>
+  <div class="sh-head">
+    <div class="sh-title">选择下载线路</div>
+    <div class="sh-sub" id="shSub">—</div>
+  </div>
+  <a class="opt rec-opt" data-line="proxy" target="_blank" rel="noopener" href="#">
+    <span class="opt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/></svg></span>
+    <span class="opt-body"><span class="opt-name">gh-proxy 加速<span class="rec">推荐</span></span><span class="opt-hint">实测最快，github 直连不通时也能用</span></span>
+    <span class="opt-ms"><span class="dot" data-dot="proxy"></span><span data-ms="proxy">—</span></span>
+  </a>
+  <a class="opt" data-line="direct" target="_blank" rel="noopener" href="#">
+    <span class="opt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18"/></svg></span>
+    <span class="opt-body"><span class="opt-name">GitHub 官方</span><span class="opt-hint">原始地址，需能直连 github.com</span></span>
+    <span class="opt-ms"><span class="dot" data-dot="direct"></span><span data-ms="direct">—</span></span>
+  </a>
+  <div class="refreshmsg" id="routeFeedback" aria-live="polite"></div>
+  <button class="cancel" id="cancel">取消</button>
+</div>
+
+
+<script>
+(function(){
+  var SAMPLE = "https://github.com/OpenMinis/OpenMinis/releases/download/1.14/MinisApp-1.14-arm64-v8a.apk";
+  var PREFIX = { direct:"", proxy:"https://gh-proxy.com/" };
+  var store = window.localStorage;
+  var MS = { direct:null, proxy:null };
+  var lastLine = store.getItem("dl_line") || "proxy";
+  var previousFocus = null;
+  var bd = document.getElementById("bd");
+  var sheet = document.getElementById("sheet");
+  var sub = document.getElementById("shSub");
+  var pending = null;
+
+  function classOf(ms){ return ms == null ? "bad" : (ms < 900 ? "good" : (ms < 2500 ? "warn" : "slow")); }
+  function paint(){
+    ["direct","proxy"].forEach(function(k){
+      var ms = MS[k];
+      document.querySelector('[data-dot="'+k+'"]').className = "dot " + (ms == null ? "" : classOf(ms));
+      document.querySelector('[data-ms="'+k+'"]').textContent = (ms == null ? "—" : ms + "ms");
+      var opt = document.querySelector('.opt[data-line="'+k+'"]');
+      if(opt){ opt.classList.toggle("last", lastLine === k); opt.classList.toggle("selected", lastLine === k); opt.setAttribute("aria-pressed", lastLine === k ? "true" : "false"); }
+    });
+  }
+  function probe(key){
+    var done = false, t0 = performance.now();
+    document.querySelector('[data-dot="'+key+'"]').className = "dot test";
+    document.querySelector('[data-ms="'+key+'"]').textContent = "…";
+    var ctrl = ("AbortController" in window) ? new AbortController() : null;
+    var timer = setTimeout(function(){ if(done) return; done = true; if(ctrl) ctrl.abort(); MS[key] = null; paint(); }, 6000);
+    fetch(PREFIX[key] + SAMPLE, { method:"GET", mode:"no-cors", cache:"no-store",
+      headers:{ "Range":"bytes=0-2047" }, signal: ctrl ? ctrl.signal : undefined })
+    .then(function(){ if(done) return; done = true; clearTimeout(timer); MS[key] = Math.round(performance.now()-t0); paint(); })
+    .catch(function(){ if(done) return; done = true; clearTimeout(timer);
+      var ms = Math.round(performance.now()-t0); MS[key] = ms < 4000 ? ms : null; paint(); });
+  }
+
+  function openSheet(row){
+    pending = { url: row.getAttribute("data-url"), app: row.getAttribute("data-app"),
+                plat: row.getAttribute("data-plat"), size: row.getAttribute("data-size") };
+    sub.textContent = pending.app + " · " + pending.plat + (pending.size ? " · " + pending.size : "");
+    document.querySelectorAll(".opt").forEach(function(o){
+      o.href = PREFIX[o.getAttribute("data-line")] + pending.url;
+    });
+    previousFocus = document.activeElement;
+    document.querySelectorAll(".wrap, #pwbd, #pwbox").forEach(function(el){ el.setAttribute("aria-hidden", "true"); });
+    paint(); bd.classList.add("show"); sheet.classList.add("show");
+    var firstOpt = document.querySelector(".opt"); if(firstOpt) firstOpt.focus();
+    probe("direct"); probe("proxy");
+  }
+  function closeSheet(){
+    bd.classList.remove("show"); sheet.classList.remove("show");
+    document.querySelectorAll(".wrap, #pwbd, #pwbox").forEach(function(el){ el.removeAttribute("aria-hidden"); });
+    if(previousFocus) previousFocus.focus();
+  }
+  document.querySelectorAll(".row").forEach(function(row){
+    row.addEventListener("click", function(e){ e.preventDefault(); openSheet(row); });
+  });
+  bd.addEventListener("click", closeSheet);
+  document.getElementById("cancel").addEventListener("click", closeSheet);
+  document.addEventListener("keydown", function(e){
+    if(!sheet.classList.contains("show")) return;
+    if(e.key === "Escape"){ closeSheet(); return; }
+    if(e.key === "Tab"){
+      var focusable = sheet.querySelectorAll('a[href],button:not([disabled])');
+      var first = focusable[0], last = focusable[focusable.length - 1];
+      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+  });
+  document.querySelectorAll(".opt").forEach(function(opt){
+    opt.addEventListener("click", function(){
+      lastLine = opt.getAttribute("data-line");
+      store.setItem("dl_line", lastLine);
+      var label = lastLine === "proxy" ? "gh-proxy 加速" : "GitHub 官方";
+      document.getElementById("routeFeedback").textContent = "已选择 " + label + " 下载线路";
+      closeSheet();
+    });
+  });
+
+    // [App 版] 刷新与密码弹窗已移除（依赖服务端 /refresh）
+  var tl = document.querySelector(".tl-text");
+  var pwbd = null, pwbox = null, pwin = null, pwerr = null;
+  function closePw(){}
+
+
+  var groups = Array.prototype.slice.call(document.querySelectorAll(".group"));
+  var state = { platform:"all" };
+  document.querySelectorAll(".card").forEach(function(c){
+    var desc = c.querySelector(".ch-desc");
+    if(desc && desc.scrollHeight > desc.clientHeight + 2){ desc.tabIndex = 0; desc.setAttribute("role", "button"); desc.setAttribute("aria-expanded", "false");
+      var toggle = function(){ var expanded = desc.classList.toggle("expanded"); desc.setAttribute("aria-expanded", expanded ? "true" : "false"); };
+      desc.addEventListener("click", toggle); desc.addEventListener("keydown", function(e){ if(e.key === "Enter" || e.key === " "){ e.preventDefault(); toggle(); } }); }
+  });
+  document.querySelectorAll(".version-switch").forEach(function(switcher){
+    var card = switcher.closest(".card");
+    switcher.querySelectorAll(".version-btn").forEach(function(button){ button.addEventListener("click", function(){
+      var selected = button.dataset.version;
+      switcher.querySelectorAll(".version-btn").forEach(function(other){ other.setAttribute("aria-pressed", other === button ? "true" : "false"); });
+      card.querySelectorAll(".release-panel").forEach(function(panel){ panel.hidden = panel.dataset.releasePanel !== selected; });
+      var selectedPanel = card.querySelector('[data-release-panel="' + selected + '"]');
+      if(selectedPanel) selectedPanel.querySelectorAll(".row").forEach(function(row){ row.dataset.active = "true"; });
+      card.querySelectorAll('.release-panel:not([data-release-panel="' + selected + '"]) .row').forEach(function(row){ row.dataset.active = "false"; });
+    }); });
+  });
+  function applyFilters(){
+    var input = document.getElementById("appSearch"), q = input.value.trim().toLowerCase(), total = 0;
+    groups.forEach(function(group){ var count = 0;
+      group.querySelectorAll(".card").forEach(function(card){
+        var platforms = (card.dataset.platforms || "").split(/\s+/);
+        var matchesPlatform = state.platform === "all" || platforms.indexOf(state.platform) >= 0;
+        var matchesSearch = !q || (card.dataset.search || "").indexOf(q) >= 0;
+        var matches = matchesPlatform && matchesSearch;
+        card.hidden = !matches;
+        if(matches){ count++; total++; }
+      });
+      group.hidden = false;
+      group.querySelector(".count").textContent = count;
+    });
+    var filtering = !!q || state.platform !== "all";
+    document.getElementById("matchCount").textContent = filtering ? total + " 个应用" : "";
+    document.getElementById("filterInfo").hidden = !filtering;
+    document.getElementById("noResults").hidden = !filtering || total > 0;
+    // 筛选后立即显示命中的卡片，避免残留的入场动画让内容透明
+    groups.forEach(function(group){ group.querySelectorAll(".card:not([hidden])").forEach(function(card){ card.classList.add("in"); }); });
+  }
+  document.getElementById("appSearch").addEventListener("input", applyFilters);
+  document.querySelectorAll(".filterbtn").forEach(function(button){ button.addEventListener("click", function(){
+    state.platform = button.dataset.value;
+    document.querySelectorAll('.filterbtn[data-filter="platform"]').forEach(function(other){ other.setAttribute("aria-pressed", other === button ? "true" : "false"); });
+    applyFilters();
+  }); });
+  document.getElementById("clearFilters").addEventListener("click", function(){
+    document.getElementById("appSearch").value = ""; state = { platform:"all" };
+    document.querySelectorAll(".filterbtn").forEach(function(button){ button.setAttribute("aria-pressed", button.dataset.value === "all" ? "true" : "false"); });
+    applyFilters(); document.getElementById("appSearch").focus();
+  });
+  applyFilters();
+
+  function revealCheck(){    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var items = document.querySelectorAll(".reveal:not(.in)");
+    for(var i=0;i<items.length;i++){
+      if(items[i].getBoundingClientRect().top < vh - 12) items[i].classList.add("in");
+    }
+  }
+  var sweep = setInterval(revealCheck, 250);
+  revealCheck();
+  setTimeout(function(){
+    document.querySelectorAll(".reveal").forEach(function(el){ el.classList.add("in"); });
+    clearInterval(sweep);
+  }, 2200);
+})();
+</script>
+
+<script>
+/* 由 App 注入：把所有 http(s) 链接交给 Android 系统浏览器打开，
+   避免 WebView 内把整个页面导航走。 */
+(function(){
+  document.addEventListener("click", function(e){
+    var a = e.target;
+    while (a && a.tagName !== "A") a = a.parentElement;
+    if (!a) return;
+    var href = a.getAttribute("href");
+    if (!href) return;
+    if (href.indexOf("http://") === 0 || href.indexOf("https://") === 0) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (window.AndroidBridge && window.AndroidBridge.openExternal) {
+        window.AndroidBridge.openExternal(href);
+      } else {
+        window.open(href, "_blank");
+      }
+    }
+  }, true);
+})();
+</script>
+</body></html>

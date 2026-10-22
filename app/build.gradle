@@ -1,0 +1,61 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.hoik.appstore'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.hoik.appstore"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0.0"
+    }
+
+    signingConfigs {
+        // 如果环境里提供了 keystore，就用正式签名；否则回落到 debug 签名
+        release {
+            def ksPath = System.getenv("RELEASE_KEYSTORE_PATH")
+            if (ksPath != null && file(ksPath).exists()) {
+                storeFile file(ksPath)
+                storePassword System.getenv("RELEASE_KEYSTORE_PASSWORD")
+                keyAlias System.getenv("RELEASE_KEY_ALIAS")
+                keyPassword System.getenv("RELEASE_KEY_PASSWORD")
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            def ksPath = System.getenv("RELEASE_KEYSTORE_PATH")
+            if (ksPath != null && file(ksPath).exists()) {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    // APK 命名带上版本，方便区分
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "AppStore-${variant.versionName}-${variant.buildType.name}.apk"
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core:1.12.0'
+}
