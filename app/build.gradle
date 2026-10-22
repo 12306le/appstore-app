@@ -48,7 +48,6 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
 
-    // APK 命名带上版本，方便区分
     applicationVariants.all { variant ->
         variant.outputs.all {
             outputFileName = "AppStore-${variant.versionName}-${variant.buildType.name}.apk"
